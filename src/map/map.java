@@ -1,5 +1,5 @@
 package map;
 
-public class map {
+public class Map {
 
 }

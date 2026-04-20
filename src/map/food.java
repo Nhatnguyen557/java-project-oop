@@ -1,5 +1,5 @@
 package map;
 
-public class food {
+public class Food {
 
 }

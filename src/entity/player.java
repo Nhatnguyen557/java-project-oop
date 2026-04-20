@@ -1,5 +1,5 @@
 package entity;
 
-public class player {
+public class Player {
 
 }

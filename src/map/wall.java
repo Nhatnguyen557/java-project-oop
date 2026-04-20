@@ -1,5 +1,5 @@
 package map;
 
-public class wall {
+public class Wall {
 
 }
