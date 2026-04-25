@@ -34,6 +34,7 @@ public class Game implements Runnable {
         map = new Map();
 
         currentState = GameState.MENU;
+        scoreManager = new ScoreManager();
     }
 
     public synchronized void start(){
@@ -74,8 +75,8 @@ public class Game implements Runnable {
         map.render(g);
         player.render(g);
 
-        for (Ghost g : ghost){
-            g.render(g);
+        for (Ghost gh : ghost){
+            gh.render(g);
         }
     }
 
