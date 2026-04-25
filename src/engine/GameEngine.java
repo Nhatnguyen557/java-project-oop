@@ -15,8 +15,6 @@ public class GameEngine {
     public GameEngine() {
         initGame();
     }
-
-    // 🟢 Initialize everything
     private void initGame() {
         map = new GameMap();
         pacman = new PacMan(1, 1);
@@ -53,8 +51,6 @@ public class GameEngine {
         // 6. Check win condition
         checkWin();
     }
-
-    // 🟡 Food system
     private void handleFood() {
         int r = pacman.getRow();
         int c = pacman.getCol();
@@ -73,8 +69,6 @@ public class GameEngine {
             activateScaredMode();
         }
     }
-
-    // 🟡 Activate scared mode
     private void activateScaredMode() {
         scaredTimer = 10; // lasts 10 updates
 
@@ -82,8 +76,6 @@ public class GameEngine {
             ghost.setScared(true);
         }
     }
-
-    // 🟡 Update scared mode
     private void updateScaredMode() {
         if (scaredTimer > 0) {
             scaredTimer--;
@@ -95,8 +87,6 @@ public class GameEngine {
             }
         }
     }
-
-    // 🟡 Collision system
     private void handleCollisions() {
         for (Ghost ghost : ghosts) {
 
@@ -120,8 +110,6 @@ public class GameEngine {
         // simple respawn position
         // (you can improve this later)
     }
-
-    // 🟡 Win condition
     private void checkWin() {
         int[][] grid = map.getMap();
 
@@ -137,8 +125,6 @@ public class GameEngine {
 
         state = GameState.WIN;
     }
-
-    // 🟡 Getters
     public int getScore() {
         return score;
     }
