@@ -58,9 +58,20 @@ public class Ghost {
         }
     }
 
-    // CHASE (OPTIONAL) 
-    private void chasePacman(Object pacman) {
-        // todo
+    // Chase PacMan
+    private void chasePacman(PacMan pacman) {
+        int px = pacman.getX();
+        int py = pacman.getY();
+
+        // chọn hướng gần nhất
+        if (Math.abs(px - x) > Math.abs(py - y)) {
+            dx = (px > x) ? 1 : -1;
+            dy = 0;
+        }
+        else {
+            dy = (py > y) ? 1 : -1;
+            dx = 0;
+        }
     }
 
     // Scared
@@ -69,10 +80,18 @@ public class Ghost {
     }
 
     // Collision
-    public boolean checkCollision(Object pacman) {
-        // todo
-
-        retrun false
+    public boolean checkCollision(PacMan pacman) {
+        if (this.x == pacman.getX() && this.y == pacman.getY()) {
+            if (scared) {
+                this.x = 1;
+                this.y = 1;
+                return false; // ghost bị ăn, reset về vị trí ban đầu
+            }
+            else {
+                return true; // PacMan chết
+            }
+        }
+        return false; // không va chạm
     }
 
      // getter
