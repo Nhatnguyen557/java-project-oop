@@ -1,81 +1,89 @@
 package entity;
 
+import java.awt.Graphics;
+import java.awt.Color;
 import java.util.Random;
+import map.Map;
 
-public class Ghost {
-    private int x, y;
-    private int dx, dy;
+public class ghost extends Entity {
+
     private boolean scared;
-    private String type; // CHASE hoặc RANDOM
+    private String type; // "CHASE" hoặc "RANDOM"
+    private Random rand;
 
-    private Random rand = new Random();
-
-    public Ghost(int x, int y, String type) {
-        this.x = x;
-        this.y = y;
+    public ghost(int x, int y, Map map, String type) {
+        super(x, y, map);
         this.type = type;
-        this.dx = 0;
-        this.dy = 0;
         this.scared = false;
+        this.rand = new Random();
+
+        // hướng ban đầu
+        this.direction = rand.nextInt(4);
     }
 
-    // Move
-    public void move(Object map, Object pacman) {
-        // Random đổi hướng
+    // UPDATE
+    @Override
+    public void update() {
+
+        //đổi hướng
         if (rand.nextInt(10) == 0) {
-            randomDirection();
+            direction = rand.nextInt(4);
         }
 
-        // Behavior theo loại ghost
-        if(!scared) {
-            if (type.equals("Chase")) {
-               chasePacman(pacman);
-            }
+        // behavior
+        if (!scared && type.equals("CHASE")) {
+            chaseSimple();
         }
 
-        // di chuyển không đụng tường
-        int nextX = x + dx;
-        int nextY = y + dy;
+        // di chuyển 
+        move();
+    }
 
-        if (map.canMove(nextX, nextY)) {
-            x = nextX;
-            y = nextY;
-        } 
-        else {
-            randomDirection(); // đụng tường thì đổi hướng đi
+    // CHASE 
+    private void chaseSimple() {
+        int newDir = rand.nextInt(4);
+
+        if (newDir != direction) {
+            direction = newDir;
         }
     }
 
-    // Random move
-    private void randomDirection() {
-        int dir = rand.nextInt(4);
-
-        switch (dir) {
-            case 0: dx = 1; dy = 0; break; // phải
-            case 1: dx = -1; dy = 0; break; // trái
-            case 2: dx = 0; dy = 1; break; // xuống
-            case 3: dx = 0; dy = -1; break; // lên
-        }
-    }
-
-    // CHASE (OPTIONAL) 
-    private void chasePacman(Object pacman) {
-        // todo
-    }
-
-    // Scared
+    //  SCARED 
     public void setScared(boolean scared) {
         this.scared = scared;
     }
 
-    // Collision
-    public boolean checkCollision(Object pacman) {
-        // todo
-
+    // COLLISION 
+    public boolean checkCollision(int px, int py) {
+        if (this.x == px && this.y == py) {
+            if (scared) {
+                // reset về vị trí spawn
+                this.x = 1;
+                this.y = 1;
+                return false;
+            } 
+            else {
+                return true; // Pac-Man chết
+            }
+        }
         return false;
     }
 
-     // getter
-    public int getX() { return x; }
-    public int getY() { return y; }
+    // RENDER 
+    @Override
+    public void render(Graphics g) {
+
+        if (scared) {
+            g.setColor(Color.BLUE);
+        } 
+        else {
+            if (type.equals("CHASE")) {
+                g.setColor(Color.RED);
+            } else {
+                g.setColor(Color.PINK);
+            }
+        }
+
+        g.fillOval(x * 32, y * 32, 28, 28);
+    }
 }
