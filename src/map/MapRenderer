@@ -1,0 +1,19 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class MapRenderer {
+    public void draw(Graphics g, int[][] maze) {
+        int cellSize = 30;
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[0].length; j++) {
+                if (maze[i][j] == 1) { // Tường
+                    g.setColor(Color.BLUE);
+                    g.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                } else if (maze[i][j] == 2) { // Thức ăn
+                    g.setColor(Color.WHITE);
+                    g.fillOval(j * cellSize + 12, i * cellSize + 12, 6, 6);
+                }
+            }
+        }
+    }
+}
