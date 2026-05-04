@@ -1,0 +1,34 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class MainGame extends JPanel {
+    int[][] maze = {{1,1,1,1,1,1,1},{1,2,2,2,2,2,1},{1,1,1,1,1,1,1}};
+    
+    MapRenderer map = new MapRenderer();
+    PacmanRenderer pacman = new PacmanRenderer();
+    RedGhost red = new RedGhost();
+    PinkGhost pink = new PinkGhost();
+    CyanGhost cyan = new CyanGhost();
+    OrangeGhost orange = new OrangeGhost();
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        this.setBackground(Color.BLACK);
+        
+        map.draw(g, maze);
+        pacman.draw(g, 30, 30);
+        red.draw(g, 60, 30);
+        pink.draw(g, 90, 30);
+        cyan.draw(g, 120, 30);
+        orange.draw(g, 150, 30);
+    }
+
+    public static void main(String[] args) {
+        JFrame f = new JFrame("Pacman Graphics");
+        f.add(new MainGame());
+        f.setSize(300, 200);
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+}
